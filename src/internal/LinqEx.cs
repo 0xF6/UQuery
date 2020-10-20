@@ -13,7 +13,6 @@
         
 
 
-        #if !MORELINQ
         #region MoreLinq
         /* START
          *
@@ -153,7 +152,6 @@
         }
         /* END */
         #endregion
-        #endif
         internal static Func<T, bool> IsEq<T>(this T t) => x => x.Equals(t);
         internal static string Join(this IEnumerable<char> t) => string.Join("", t);
 
