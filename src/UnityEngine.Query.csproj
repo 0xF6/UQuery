@@ -9,6 +9,6 @@
 
     <ItemGroup>
       <Folder Include="internal\" />
-      <Folder Include="~Shim\" />
+      <Folder Include="Shim~\" />
     </ItemGroup>
 </Project>
