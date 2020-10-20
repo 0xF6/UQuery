@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="**\*.meta" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Folder Include="internal\" />
       <Folder Include="Shim~\" />
     </ItemGroup>
