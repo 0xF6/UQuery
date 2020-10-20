@@ -5,6 +5,11 @@
   "description": "Library for querying unity gameobject",
   "unity": "2019.1",
   "unityRelease": "0b5",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xF6/UQuery.git"
+  },
   "keywords": [
     "query",
 	"gameobject"
