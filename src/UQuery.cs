@@ -9,6 +9,27 @@
         private static GameObject[] GetRoot() 
             => SceneManager.GetActiveScene().GetRootGameObjects();
 
+        /// <summary>
+        /// Select <see cref="GameObject"/> or <see cref="T"/> by path.
+        /// </summary>
+        /// <typeparam name="T">
+        /// <see cref="GameObject"/> or Unity Component
+        /// </typeparam>
+        /// <param name="path">
+        /// Query path
+        /// </param>
+        /// <returns>
+        /// <see cref="GameObject"/> or Unity Component.
+        /// </returns>
+        /// <exception cref="QueryTypeMismatchException">
+        /// Generic type is not GameObject when class it not specified in query path.
+        /// </exception>
+        /// <exception cref="GameObjectNotFoundByPath">
+        /// GameObject by name not found in scene.
+        /// </exception>
+        /// <exception cref="IncorrectPathException">
+        /// Path is not correct. (Null or Empty)
+        /// </exception>
         public static T SelectByPath<T>(string path) where T : class
         {
             if (string.IsNullOrEmpty(path))
@@ -18,7 +39,7 @@
 
 
             if (@class is null && typeof(T) != typeof(GameObject))
-                throw new QueryTypeMismatchException( typeof(T), typeof(GameObject), path);
+                throw new QueryTypeMismatchException(typeof(T), typeof(GameObject), path);
 
             var target = Find(root, path);
 
