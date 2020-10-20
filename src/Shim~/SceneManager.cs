@@ -4,11 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class SceneManager
+    namespace SceneManagement
     {
-        private static Scene _scene = new Scene();
-        public static Scene GetActiveScene() => _scene;
+        public class SceneManager
+        {
+            private static Scene _scene = new Scene();
+            public static Scene GetActiveScene() => _scene;
+        }
     }
+    
 
 
     public static class __GO__
