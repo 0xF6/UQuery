@@ -1,9 +1,9 @@
 {
   "name": "com.ivysola.uquery",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "displayName": "uquery",
   "description": "Library for querying unity gameobject",
-  "unity": "2019.1",
+  "unity": "2020.2",
   "unityRelease": "0b5",
   "license": "MIT",
   "repository": {
@@ -12,7 +12,7 @@
   },
   "keywords": [
     "query",
-	"gameobject"
+	  "gameobject"
   ],
   "author": {
     "name": "Yuuki Wesp",
