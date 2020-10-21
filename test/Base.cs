@@ -73,7 +73,45 @@ namespace test
             Assert.Throws<GameObjectNotFoundByPath>(() => SelectByPath<GameObject>("N.AJSJDJ2213"));
             __GO__.goStorage.Clear();
         }
+
+        [Fact]
+        public void Test02()
+        {
+            void SetupTest02()
+            {
+                /*
+                %root% |
+                    - Canvas |
+                        - Layout |
+                            - Header |
+                                - Title | <UIText>
+                 */
+                var canvas = new GameObject("Canvas");
+                var layout = new GameObject("Layout");
+                var header = new GameObject("Header");
+                var title = new GameObject("Title");
+                var uiText = new UIText();
+
+
+                title.components.Add(uiText);
+                header.transform.Childs.Add(title);
+                layout.transform.Childs.Add(header);
+                canvas.transform.Childs.Add(layout);
+
+                __GO__.Add(canvas);
+            }
+
+            SetupTest02();
+
+
+            Assert.Throws<GameObjectNotFoundByPath>(() =>  SelectByPath<UIText>("Canvas>Layout>InvalidObject>Title[UIText]"));
+
+
+            __GO__.goStorage.Clear();
+        }
     }
+
+
 
     public class UIText : Component
     {
