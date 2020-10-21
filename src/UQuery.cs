@@ -1,4 +1,4 @@
-﻿namespace UnityEngine.Query
+namespace UnityEngine.Query
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +9,26 @@
     {
         private static GameObject[] GetRoot() 
             => SceneManager.GetActiveScene().GetRootGameObjects();
-
+        /// <summary>
+        /// Select <see cref="GameObject"/> by path.
+        /// </summary>
+        /// <param name="path">
+        /// Query path
+        /// </param>
+        /// <returns>
+        /// <see cref="GameObject"/>
+        /// </returns>
+        /// <exception cref="QueryTypeMismatchException">
+        /// Generic type is not GameObject when class it not specified in query path.
+        /// </exception>
+        /// <exception cref="GameObjectNotFoundByPath">
+        /// GameObject by name not found in scene.
+        /// </exception>
+        /// <exception cref="IncorrectPathException">
+        /// Path is not correct. (Null or Empty)
+        /// </exception>
+        public static GameObject SelectByPath(string path) 
+            => SelectByPath<GameObject>(path);
         /// <summary>
         /// Select <see cref="GameObject"/> or <see cref="T"/> by path.
         /// </summary>
