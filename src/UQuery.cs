@@ -1,4 +1,4 @@
-namespace UnityEngine.Query
+﻿namespace UnityEngine.Query
 {
     using System;
     using System.Collections.Generic;
@@ -72,7 +72,7 @@ namespace UnityEngine.Query
 
             if (@class is null)
                 return target as T;
-            return target.GetComponent<T>();
+            return target?.GetComponent<T>();
         }
         private static GameObject Find(string name, string path)
         {

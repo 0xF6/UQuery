@@ -1,6 +1,6 @@
 {
   "name": "com.ivysola.uquery",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "displayName": "uquery",
   "description": "Library for querying unity gameobject",
   "unity": "2020.2",
