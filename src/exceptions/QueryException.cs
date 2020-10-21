@@ -7,7 +7,7 @@
         private readonly string _path;
         private readonly string _message;
 
-        public QueryException(string path, string message) : base()
+        public QueryException(string message, string path) : base()
         {
             _path = path;
             _message = message;
