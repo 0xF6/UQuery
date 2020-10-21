@@ -67,7 +67,10 @@
             {
                 if(!keys.Any())
                     break;
-                target = target.Child(keys.Pop());
+                var key = keys.Pop();
+                target = target.Child(key);
+                if (target is null)
+                    throw new GameObjectNotFoundByPath(key, path);
             }
 
             if (@class is null)
