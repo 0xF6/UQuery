@@ -39,7 +39,7 @@
 
         public GameObject gameObject;
 
-        public Transform Find(string name) => Childs.FirstOrDefault(x => x.name == name).transform;
+        public Transform Find(string name) => Childs.FirstOrDefault(x => x.name == name)?.transform;
     }
 
     public class Component : Object
