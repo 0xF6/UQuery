@@ -56,6 +56,23 @@ result // UIText component
 
 var result = UQuery.SelectByPath<GameObject>("Canvas>Layout>ButtonGroup");
 result // GameObject 'ButtonGroup'
+
+/*
+%root% |
+    - Canvas |
+        - Layout |
+            - Header |
+                - Title1
+            - Header |
+                - Title2
+            - Header |
+                - Title3
+            - Header |
+                - Title4
+*/
+
+var result = UQuery.SelectByPath<UIText>("Canvas>Layout>Header:(2)>Title3");
+result // GameObject 'Title3'
 ```
 
 
@@ -70,3 +87,4 @@ result // GameObject 'ButtonGroup'
 - [ ] Strong validation path format
 - [x] Additional exceptions types
 - [ ] Query cache system 
+- [x] Access child (same names) by index
