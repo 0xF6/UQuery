@@ -38,6 +38,16 @@
   </a>
 </p>
 
+## 📦 Install 
+
+```bash
+openupm add com.ivysola.uquery
+```
+or paste this into `manifest.json`
+```json
+"com.ivysola.uquery": "https://github.com/0xF6/UQuery.git?path=src/",
+```
+
 
 ## 📌 Usage
 
@@ -88,3 +98,9 @@ result // GameObject 'Title3'
 - [x] Additional exceptions types
 - [ ] Query cache system 
 - [x] Access child (same names) by index
+
+
+## ⚙️ Unity Version Support
+
+So, the code of this library uses C# `8.0` version, upm puts the source code in its pure form, and unity compiles it with its internal compiler - so the minimum supported version of the package is `2020.2`.
+if you want to use this library on older versions of the engine, the compiled library (`built in Plugins`) can also work on version `2019.*` or you can use [C# Custom compiler](https://github.com/mob-sakai/CSharpCompilerSettingsForUnity) for set-up your 2019.* unity to you to compile C# 8.0 in packages asmdef.
