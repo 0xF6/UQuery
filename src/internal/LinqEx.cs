@@ -150,20 +150,57 @@
                     yield return enumerator.Current;
             }
         }
+        internal static IEnumerable<TSource> TakeUntilWithMemory<TSource>(this IEnumerable<TSource> source, Func<TSource, TSource, bool> predicate)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+            
+            return _(); IEnumerable<TSource> _()
+            {
+                TSource last = default(TSource);
+                foreach (var item in source)
+                {
+                    yield return item;
+                    if (predicate(item, last))
+                        yield break;
+                    last = item;
+                }
+            }
+        }
+        internal static IEnumerable<TSource> SkipUntilWithMemory<TSource>(this IEnumerable<TSource> source, Func<TSource, TSource, bool> predicate)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+
+            return _(); IEnumerable<TSource> _()
+            {
+                using var enumerator = source.GetEnumerator();
+                TSource last = default(TSource);
+                var index = 0;
+                do
+                {
+                    if(index != 0)
+                        last = enumerator.Current;
+                    if (!enumerator.MoveNext())
+                        yield break;
+                    index++;
+                }
+                while (!predicate(enumerator.Current, last));
+
+                while (enumerator.MoveNext())
+                    yield return enumerator.Current;
+            }
+        }
         /* END */
         #endregion
         internal static Func<T, bool> IsEq<T>(this T t) => x => x.Equals(t);
         internal static string Join(this IEnumerable<char> t) => string.Join("", t);
 
         internal static bool Contains<T>(this IEnumerable<T> t, params T[] target) 
-            => t.Contains(target, Comparer.Default);
+            => t.Contains(target, EqualityComparer<T>.Default);
 
-        internal static bool Contains<T>(this IEnumerable<T> t, T[] target, IComparer comparer)
-        {
-            var sorder = t.ToArray();
-            Array.Sort(sorder, comparer);
-            return target.All(x => Array.BinarySearch(sorder, x) > 0);
-        }
+        internal static bool Contains<T>(this IEnumerable<T> t, T[] target, IEqualityComparer<T> comparer) 
+            => t.Intersect(target, comparer).Any();
 
 
         internal static IEnumerable<T> LastEdit<T>(this IEnumerable<T> collection, Func<T, T> editor)
