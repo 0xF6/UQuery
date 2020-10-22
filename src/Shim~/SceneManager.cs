@@ -40,6 +40,12 @@
         public GameObject gameObject;
 
         public Transform Find(string name) => Childs.FirstOrDefault(x => x.name == name)?.transform;
+
+
+        public int childCount => Childs.Count;
+
+
+        public Transform GetChild(int index) => Childs[index].transform;
     }
 
     public class Component : Object
@@ -48,6 +54,7 @@
     public class GameObject : Object
     {
         public Transform transform;
+        public string metadata;
 
         public List<object> components = new List<object>();
 
