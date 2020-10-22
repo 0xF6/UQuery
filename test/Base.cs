@@ -109,6 +109,55 @@ namespace test
 
             __GO__.goStorage.Clear();
         }
+
+        [Fact]
+        public void Test03()
+        {
+            void SetupTest03()
+            {
+                /*
+                %root% |
+                    - Canvas |
+                        - Layout |
+                            - Header |
+                                - Title | <UIText>
+                            - Header |
+                                - Title | <UIText>
+                 */
+                var canvas = new GameObject("Canvas");
+                var layout = new GameObject("Layout");
+                var header1 = new GameObject("Header") { metadata = "header1"};
+                var header2 = new GameObject("Header") { metadata = "header2" };
+                var title = new GameObject("Title");
+                var uiText = new UIText();
+
+
+                title.components.Add(uiText);
+                header1.transform.Childs.Add(title);
+                header2.transform.Childs.Add(title);
+                layout.transform.Childs.Add(header1);
+                layout.transform.Childs.Add(header2);
+                canvas.transform.Childs.Add(layout);
+
+                __GO__.Add(canvas);
+            }
+
+            SetupTest03();
+
+
+            var gp0 = SelectByPath("Canvas>Layout>Header:(0)");
+            var gp1 = SelectByPath("Canvas>Layout>Header:(1)");
+
+            Assert.NotNull(gp0);
+            Assert.NotNull(gp1);
+
+            Assert.Equal("header1", gp0.metadata);
+            Assert.Equal("header2", gp1.metadata);
+
+            Assert.Throws<QueryIndexerException>(() => SelectByPath("Canvas>Layout>Header:(3)"));
+
+            __GO__.goStorage.Clear();
+        }
     }
 
 

@@ -57,7 +57,6 @@
 
             var (root, keys, @class) = DeconstructPath(path);
 
-
             if (@class is null && typeof(T) != typeof(GameObject))
                 throw new QueryTypeMismatchException(typeof(T), typeof(GameObject), path);
 
@@ -68,9 +67,27 @@
                 if(!keys.Any())
                     break;
                 var key = keys.Pop();
-                target = target.Child(key);
-                if (target is null)
-                    throw new GameObjectNotFoundByPath(key, path);
+                var indexer = DeconstructIndexer(key);
+
+                if (indexer != default)
+                {
+                    var childres = target
+                        .Children()
+                        .ToArray(x => x.name == indexer.key);
+
+                    if (childres.Length == 0)
+                        throw new GameObjectNotFoundByPath(key, path);
+
+                    if (childres.Length <= indexer.index)
+                        throw new QueryIndexerException(key, indexer.key, indexer.index ?? 0, childres.Length, path);
+                    target = childres[indexer.index ?? 0];
+                }
+                else
+                {
+                    target = target.Child(key);
+                    if (target is null)
+                        throw new GameObjectNotFoundByPath(key, path);
+                }
             }
 
             if (@class is null)
@@ -103,5 +120,37 @@
             }
             return null;
         }
+
+        internal static (int? index, string key) DeconstructIndexer(string key)
+        {
+            (int? index, string key) defaultValue = (null, null);
+            if (string.IsNullOrEmpty(key))
+                return defaultValue;
+            if (!key.Contains(':', '(', ')'))
+                return defaultValue;
+
+            Func<char, char, bool> q = (cur, last) => cur == '(' && last == ':';
+
+            var indexer = key.SkipUntilWithMemory(q).Join();
+            var rawKey = key.TakeUntilWithMemory(q).Join();
+            if (indexer.Last() != ')')
+                return defaultValue;
+            if (!rawKey.EndsWith(":("))
+                return defaultValue;
+
+            if (int.TryParse(indexer.SkipLast(1).Join(), out var index))
+                return (index, rawKey.SkipLast(2).Join());
+            return defaultValue;
+
+        }
     }
+
+    // TODO
+    /*public struct UnityPath
+    {
+        public string ClassName { get; set; }
+        public string[] Keys { get; set; }
+        public string RootKey { get; set; }
+        public string LastKey { get; set; }
+    }*/
 }
